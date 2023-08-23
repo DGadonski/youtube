@@ -27,7 +27,18 @@ class Api {
 
     Map<String, dynamic> dadosJson = jsonDecode(response.body);
 
-    List<Video> videos = dadosJson['items'];
+    List<Video> videos = dadosJson['items'].map<Video>(
+      (map){
+        return Video.fromJson(map);
+        // return Video.converterJson(map);
+      }
+    ).toList();
+
+    for (var video in videos) {
+
+      print(video.titulo);
+      
+    }
 
     // for (var video in dadosJson['items']) {
 
@@ -35,12 +46,12 @@ class Api {
       
     // }
 
-    if ( response.statusCode == 200) {
+    // if ( response.statusCode == 200) {
 
-      print(response.statusCode);
-      print(dadosJson['items'][0]['snippet']['title']);
+    //   print(response.statusCode);
+    //   print(dadosJson['items'][0]['snippet']['title']);
 
-    } else {}
+    // } else {}
 
   }
 
