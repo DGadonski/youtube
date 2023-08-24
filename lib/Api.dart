@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_interpolation_to_compose_strings
+// ignore_for_file: file_names, prefer_interpolation_to_compose_strings, constant_identifier_names
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,7 +11,7 @@ const URL_BASE = 'https://www.googleapis.com/youtube/v3/';
 
 class Api {
 
-  pesquisar(String pesquisa) async {
+  Future<List<Video>> pesquisar(String pesquisa) async {
 
     http.Response response = await http.get(Uri.parse(
       URL_BASE + "search"
@@ -31,14 +31,15 @@ class Api {
       (map){
         return Video.fromJson(map);
         // return Video.converterJson(map);
-      }
-    ).toList();
+      }).toList();
 
-    for (var video in videos) {
+    return videos;
+    
+    // for (var video in videos) {
 
-      print(video.titulo);
+    //   print(video.titulo);
       
-    }
+    // }
 
     // for (var video in dadosJson['items']) {
 

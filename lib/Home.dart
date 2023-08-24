@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names
 
 import 'package:flutter/material.dart';
-import 'package:youtube/telas/Inicio.dart';
-import 'package:youtube/telas/Emalta.dart';
-import 'package:youtube/telas/Inscricoes.dart';
-import 'package:youtube/telas/Biblioteca.dart';
+import 'package:youtube_test/telas/Inicio.dart';
+import 'package:youtube_test/telas/Emalta.dart';
+import 'package:youtube_test/telas/Inscricoes.dart';
+import 'package:youtube_test/telas/Biblioteca.dart';
+
+import 'CustomSearchDelegate.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -38,21 +40,28 @@ class _HomeState extends State<Home> {
         height: 22,
         ),
         actions: [
+
           IconButton(
-            onPressed: (){}, 
-            icon: Icon(Icons.videocam)
-          ),
-          IconButton(
-            onPressed: (){}, 
+            onPressed: () async{
+              String? res = await showSearch(context: context, delegate: CustomSearchDelegate());
+              print('resultado digitado: $res');
+            }, 
             icon: Icon(Icons.search)
           ),
-          IconButton(
-            onPressed: (){}, 
-            icon: Icon(Icons.account_circle)
-          ),
+          // IconButton(
+          //   onPressed: (){}, 
+          //   icon: Icon(Icons.videocam)
+          // ),
+          // IconButton(
+          //   onPressed: (){}, 
+          //   icon: Icon(Icons.account_circle)
+          // ),
+
         ],
       ),
-      body: telas[indiceAtual] ,
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: telas[indiceAtual]) ,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indiceAtual,
         onTap: (indice) {
