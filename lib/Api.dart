@@ -11,7 +11,7 @@ const URL_BASE = 'https://www.googleapis.com/youtube/v3/';
 
 class Api {
 
-  Future<List<Video>> pesquisar(String pesquisa) async {
+  Future<List<Video>> pesquisar(String? pesquisa) async {
 
     http.Response response = await http.get(Uri.parse(
       URL_BASE + "search"

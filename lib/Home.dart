@@ -19,15 +19,18 @@ class _HomeState extends State<Home> {
 
   int indiceAtual = 0;
 
+  String? resultado;
+ 
+  @override
+  Widget build(BuildContext context) {
+
   List<Widget> telas = [
-    Inicio(),
+    Inicio(resultado),
     Emalta(),
     Inscricoes(),
     Biblioteca(),    
   ];
-
-  @override
-  Widget build(BuildContext context) {
+  
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -44,7 +47,9 @@ class _HomeState extends State<Home> {
           IconButton(
             onPressed: () async{
               String? res = await showSearch(context: context, delegate: CustomSearchDelegate());
-              print('resultado digitado: $res');
+              setState(() {
+                resultado = res;
+              });
             }, 
             icon: Icon(Icons.search)
           ),

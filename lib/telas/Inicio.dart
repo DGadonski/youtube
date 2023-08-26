@@ -1,12 +1,19 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names, must_be_immutable, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:youtube/youtube.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import '../Api.dart';
 import '../model/video.dart';
 
 class Inicio extends StatefulWidget {
-  const Inicio({super.key});
+
+  String? pesquisa;
+
+  Inicio(this.pesquisa);
+
 
   @override
   State<Inicio> createState() => _InicioState();
@@ -14,12 +21,12 @@ class Inicio extends StatefulWidget {
 
 class _InicioState extends State<Inicio> {
 
-  listarVideos(){
+  listarVideos(String? pesquisa){
 
     Future<List<Video>> videos;
 
     Api api = Api();
-    videos = api.pesquisar('');    
+    videos = api.pesquisar(pesquisa);    
 
     return videos;
     
@@ -30,7 +37,7 @@ class _InicioState extends State<Inicio> {
 
 
     return FutureBuilder<List<Video>>(
-      future: listarVideos(),
+      future: listarVideos(widget.pesquisa),
       builder: (context, snapshot){ 
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -45,22 +52,27 @@ class _InicioState extends State<Inicio> {
                   var videos = snapshot.data;
                   Video video = videos![index];
 
-                  return Column(
-                    children: [
-                      Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(video.imagem)
-                          ) 
+                  return GestureDetector(
+                    onTap: (){
+                      
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(video.imagem)
+                            ) 
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        title: Text(video.titulo),
-                        subtitle: Text(video.descricao),
-                      )
-                    ],
+                        ListTile(
+                          title: Text(video.titulo),
+                          subtitle: Text(video.descricao),
+                        )
+                      ],
+                    ),
                   );
                 }, 
                 separatorBuilder: (context, index){
